@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container-fluid d-flex flex-column min-vh-100">
+    <div class="row flex-grow-1 justify-content-center align-items-center">
+        <div class="col-md-6">
+            <form method="post" class="border p-4 rounded shadow-sm bg-light">
+                {% csrf_token %}
+                
+                <h2 class="text-center text-orange mb-4">Login</h2>
+
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+
+                <div class="mb-3 text-center">
+                    <button type="submit" class="btn btn-warning w-100">Login</button>
+                </div>
+            </form>
+
+            <div class="messages mt-3">
+                {% for message in messages %}
+                    <div class="alert alert-info">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .text-orange {
+        color: #ff9900;
+    }
+    .bg-light {
+        background-color: #f5f5f5;
+    }
+    .btn-warning {
+        background-color: #ff9900;
+        border-color: #ff9900;
+    }
+    .btn-warning:hover {
+        background-color: #e68a00;
+        border-color: #e68a00;
+    }
+    .form-label {
+        font-weight: bold;
+        color: #333333;
+    }
+    .form-control {
+        border-radius: 0.375rem;
+        border: 1px solid #333333;
+    }
+    .alert-info {
+        background-color: #f0f8ff;
+        color: #333;
+    }
+</style>
+{% endblock %}

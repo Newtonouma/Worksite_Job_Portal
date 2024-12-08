@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <header class="hero-background flex items-center justify-center text-center text-white">
+        <div class="px-6 py-12 md:px-12">
+            <h1 class="text-5xl font-bold mb-6 leading-tight">Find Your Ideal Construction Job</h1>
+            <p class="text-xl mb-8">Explore job opportunities in the construction and manual labor industry with ease.</p>
+            <a href="#categories" class="btn-orange">Browse Categories</a>
+        </div>
+    </header>
+
+    <!-- Categories Section -->
+    <section id="categories" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl font-semibold mb-12 text-orange-500">Popular Job Categories</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out">
+                    <div class="text-6xl text-orange-500 mb-6">
+                        <i class="bi bi-tools"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Construction</h3>
+                    <p class="text-gray-600">Explore roles in construction management, carpentry, and general labor.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out">
+                    <div class="text-6xl text-orange-500 mb-6">
+                        <i class="bi bi-house-door"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Real Estate</h3>
+                    <p class="text-gray-600">Join roles in real estate development, property management, and more.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out">
+                    <div class="text-6xl text-orange-500 mb-6">
+                        <i class="bi bi-person-workspace"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Skilled Trades</h3>
+                    <p class="text-gray-600">Discover opportunities in plumbing, electrical work, and other skilled trades.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="container my-5 pt-20">
+        <h1 class="text-center text-orange-400 font-bold text-3xl mb-5">
+            Available Job Listings
+        </h1>
+    
+        {% if jobs %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for job in jobs %}
+                <div class="bg-orange-100 text-gray-800 rounded-lg shadow-md p-6">
+                        <h3 class="text-orange-400 font-semibold text-xl mb-2">
+                            {{ job.title }}
+                        </h3>
+                        <p class="mb-1">
+                            <strong>Company:</strong> {{ job.company.name }}
+                        </p>
+                        <p class="mb-1">
+                            <strong>Location:</strong> {{ job.location }}
+                        </p>
+                        <p class="mb-1">
+                            <strong>Salary:</strong> ${{ job.salary }}
+                        </p>
+                        <p class="mb-1">
+                            <strong>Requirements:</strong> {{ job.requirement }}
+                        </p>
+                        <p class="mb-1">
+                            <strong>Ideal Candidate:</strong> {{ job.ideal_candidate }}
+                        </p>
+                        <p>
+                            <strong>Available:</strong>
+                            <span class="font-bold text-{{ job.is_available|yesno:'green-400,red-400' }}">
+                                {{ job.is_available|yesno:"Yes,No" }}
+                            </span>
+                        </p>
+                        <!-- Apply Button -->
+                        <div class="mt-4 text-center">
+                            <a href="#" class="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded">
+                                Apply
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-gray-200 text-lg bg-gray-600 py-4 rounded-lg shadow-md">
+                No jobs available at the moment.
+            </p>
+        {% endif %}
+    </div>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl font-semibold mb-12 text-orange-500">What Our Users Say</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-8 rounded-lg shadow-lg">
+                    <p class="italic text-lg mb-4">"This platform helped me find the perfect construction job in no time!"</p>
+                    <footer class="font-semibold text-xl">John Doe</footer>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-lg shadow-lg">
+                    <p class="italic text-lg mb-4">"Great experience! It’s easy to use and highly effective."</p>
+                    <footer class="font-semibold text-xl">Jane Smith</footer>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-lg shadow-lg">
+                    <p class="italic text-lg mb-4">"I was able to connect with employers instantly and start working right away!"</p>
+                    <footer class="font-semibold text-xl">Michael Lee</footer>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

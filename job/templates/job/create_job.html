@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="text-center mb-6">
+        <h1 class="text-4xl font-bold text-orange-500 mb-2">Create Job Listing</h1>
+        <p class="text-lg text-gray-600">Fill in the form below to create a new job listing for your company.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="bg-white shadow-xl rounded-lg p-8">
+                
+                <!-- Django Messages Section -->
+                {% if messages %}
+                <div class="mb-4">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            <strong>{{ message }}</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Job Creation Form -->
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="space-y-4">
+                        {% for field in form %}
+                            <div class="mb-4">
+                                <label for="{{ field.id_for_label }}" class="block text-lg font-medium text-gray-700">{{ field.label }}</label>
+                                <div class="mt-1">
+                                    <input type="{{ field.type }}" name="{{ field.name }}" id="{{ field.id_for_label }}"
+                                           class="block w-full p-3 mt-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" 
+                                           value="{{ field.value }}" required>
+                                </div>
+                                {% if field.errors %}
+                                    <div class="text-red-500 text-sm mt-2">
+                                        {% for error in field.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="text-center mt-6">
+                        <button type="submit" class="btn btn-primary shadow-md px-8 py-3 rounded-full text-white bg-orange-500 hover:bg-orange-600 focus:ring-2 focus:ring-orange-300 transition ease-in-out duration-300">
+                            Create Job
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Cancel Button -->
+                <div class="text-center mt-4">
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary px-6 py-2 rounded-md text-gray-800 hover:bg-gray-200 transition-all ease-in-out duration-300">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
