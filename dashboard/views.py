@@ -1,6 +1,4 @@
-from django.shortcuts import render
-
-    
+from django.shortcuts import render    
 from django.contrib.auth.models import Group
 
 def dashboard(request):
@@ -14,3 +12,5 @@ def dashboard(request):
         'items': [] 
     }
     return render(request, 'dashboard/dashboard.html', context)
+
+

@@ -1,0 +1,66 @@
+{% extends 'job/base.html' %}
+
+{% block content %}
+<div class="container my-5 pt-20">
+    <h1 class="text-center text-orange-400 font-bold text-3xl mb-5">
+        Jobs You've Created
+    </h1>
+
+    {% if jobs %}
+        <div class="overflow-x-auto bg-orange-100 rounded-lg shadow-md p-4">
+            <table class="table-auto w-full max-w-5xl mx-auto text-sm">
+                <thead>
+                    <tr class="bg-orange-200 text-gray-800">
+                        <th class="px-4 py-2 w-1/6">Title</th>
+                        <th class="px-4 py-2 w-1/6">Company</th>
+                        <th class="px-4 py-2 w-1/6">Location</th>
+                        <th class="px-4 py-2 w-1/6">Salary</th>
+                        <th class="px-4 py-2 w-1/4">Requirements</th>
+                        <th class="px-4 py-2 w-1/6">Ideal Candidate</th>
+                        <th class="px-4 py-2 w-1/8">Available</th>
+                        <th class="px-4 py-2 w-1/8">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr class="border-b hover:bg-orange-50">
+                        <td class="px-4 py-2">{{ job.title }}</td>
+                        <td class="px-4 py-2">{{ job.company.name }}</td>
+                        <td class="px-4 py-2">{{ job.location }}</td>
+                        <td class="px-4 py-2">${{ job.salary }}</td>
+                        <td class="px-4 py-2">
+                            <div class="overflow-hidden text-ellipsis max-h-24 overflow-y-auto">
+                                {{ job.requirement }}
+                            </div>
+                        </td>
+                        <td class="px-4 py-2">
+                            <div class="overflow-hidden text-ellipsis max-h-24 overflow-y-auto">
+                                {{ job.ideal_candidate }}
+                            </div>
+                        </td>
+                        <td class="px-4 py-2 text-center">
+                            <span class="font-bold text-{{ job.is_available|yesno:'green-400,red-400' }}">
+                                {{ job.is_available|yesno:"Yes,No" }}
+                            </span>
+                        </td>
+                        <td class="px-4 py-2 text-center">
+                            <a href="{% url 'edit_job' job.id %}"
+                                class="bg-orange-400 hover:bg-orange-500 text-white font-bold py-1 px-3 rounded">
+                                Edit
+                            </a>
+                            <a href="{% url 'view_applicants' job_id=job.id %}" class="text-orange-500 hover:text-orange-600">
+                                View Applicants
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-center text-gray-200 text-lg bg-gray-600 py-4 rounded-lg shadow-md">
+            You have not created any jobs yet.
+        </p>
+    {% endif %}
+</div>
+{% endblock %}

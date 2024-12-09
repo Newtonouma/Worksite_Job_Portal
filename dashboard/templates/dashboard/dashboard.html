@@ -1,92 +1,88 @@
 {% extends 'dashboard/base.html' %}
 
-{% block title %}dashboard{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-6">
     {% if is_applicant %}
         {% if not request.user.has_resume %}
+        <!-- Alert for Missing Resume -->
         <div class="alert bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 mb-6 rounded" role="alert">
             <b>You don't have a resume. Create one <a href="{% url 'update_resume' %}" class="text-orange-500 underline">here</a>.</b>
         </div>
-    
+        {% endif %}
+
+        <!-- Applicant Dashboard -->
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="header flex justify-between items-center pb-4 border-b border-gray-300">
                 <div class="header-left">
                     <h2 class="text-2xl font-bold text-orange-500">Applicant Dashboard</h2>
-                    <p class="text-gray-700">Welcome, {{ request.user.username }}!</p>                    
+                    <p class="text-gray-700">Welcome, {{ request.user.username }}!</p>
                 </div>
+                <!-- View Jobs Button -->
+                <a href="{% url 'job_listing' %}" class="bg-orange-500 text-white font-bold py-2 px-4 rounded hover:bg-orange-600">
+                    View All Jobs
+                </a>
             </div>
-            <h4 class="text-lg font-semibold text-gray-800 mt-6">Item List</h4>
-            <table class="table-auto w-full border-collapse border border-gray-300 mt-4">
-                <thead class="bg-gray-100">
-                    <tr>
-                        <th class="border border-gray-300 px-4 py-2 text-left text-gray-800">Name</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left text-gray-800">Description</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left text-gray-800">Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in items %}
-                    <tr class="hover:bg-orange-50">
-                        <td class="border border-gray-300 px-4 py-2">{{ item.name }}</td>
-                        <td class="border border-gray-300 px-4 py-2">{{ item.description }}</td>
-                        <td class="border border-gray-300 px-4 py-2">${{ item.price }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <!-- Action Links -->
+            <div class="mt-4 flex justify-between">
+                <a href="{% url 'my_applications' %}" class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600">
+                    View My Applications
+                </a>
+                <a href="{% url 'update_resume' %}" class="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600">
+                    Update Resume
+                </a>
+            </div>
         </div>
-        {% endif %}
+
     {% elif is_recruiter %}
         {% if request.user.has_company %}
+        <!-- Alert for Company Found -->
         <div class="alert bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded" role="alert">
-            <b>You have a company! Create a job listing.</b>
+            <b>You have a company! Create a job listing below.</b>
         </div>
         {% else %}
+        <!-- Alert for Missing Company -->
         <div class="alert bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded" role="alert">
             <b>You do not have a company. Create one <a href="{% url 'update_company' %}" class="text-red-500 underline">here</a>.</b>
         </div>
         {% endif %}
+
+        <!-- Recruiter Dashboard -->
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="header flex justify-between items-center pb-4 border-b border-gray-300">
                 <div class="header-left">
                     <h2 class="text-2xl font-bold text-orange-500">Recruiter Dashboard</h2>
                     <p class="text-gray-700">Welcome, {{ request.user.username }}!</p>
-                    <a href="{% url 'create_job' %}" class="text-orange-500 font-bold hover:underline">Create Job</a>
                 </div>
+                <!-- Create Job Button -->
+                <a href="{% url 'create_job' %}" class="bg-orange-500 text-white font-bold py-2 px-4 rounded hover:bg-orange-600">
+                    Create Job
+                </a>
             </div>
-
-            <h4 class="text-lg font-semibold text-gray-800 mt-6">Item List</h4>
-            <table class="table-auto w-full border-collapse border border-gray-300 mt-4">
-                <thead class="bg-gray-100">
-                    <tr>
-                        <th class="border border-gray-300 px-4 py-2 text-left text-gray-800">Name</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left text-gray-800">Description</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left text-gray-800">Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in items %}
-                    <tr class="hover:bg-orange-50">
-                        <td class="border border-gray-300 px-4 py-2">{{ item.name }}</td>
-                        <td class="border border-gray-300 px-4 py-2">{{ item.description }}</td>
-                        <td class="border border-gray-300 px-4 py-2">${{ item.price }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <!-- Action Links -->
+            <div class="mt-4 flex justify-between">
+                <a href="{% url 'manage_jobs' %}" class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600">
+                    Manage Jobs
+                </a>
+                <a href="{% url 'update_company' %}" class="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600">
+                    Update Company
+                </a>
+            </div>
         </div>
+
     {% else %}
+        <!-- Default User View -->
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="header pb-4 border-b border-gray-300">
                 <h2 class="text-2xl font-bold text-orange-500">Home</h2>
                 <p class="text-gray-700">Welcome, {{ request.user.username }}!</p>
             </div>
             <p class="text-gray-700 mt-4">You do not have access to this dashboard.</p>
-            <a href="{% url 'logout' %}" class="text-orange-500 font-bold hover:underline">Logout</a>
+            <a href="{% url 'logout' %}" class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600">
+                Logout
+            </a>
         </div>
     {% endif %}
 </div>
-
 {% endblock %}

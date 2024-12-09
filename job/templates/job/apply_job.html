@@ -1,0 +1,26 @@
+{% extends 'job/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center text-orange-400 font-bold text-3xl mb-5">
+        Apply for Job: {{ job.title }}
+    </h1>
+
+    <div class="bg-orange-100 text-gray-800 rounded-lg shadow-md p-6 max-w-lg mx-auto">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="cover_letter" class="block text-gray-700 font-semibold mb-1">Cover Letter</label>
+                <textarea id="cover_letter" name="cover_letter" rows="6" placeholder="Write a short cover letter"
+                          class="block w-full border-gray-300 rounded-md shadow-sm p-2 focus:ring-orange-500 focus:border-orange-500"></textarea>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-6 rounded-md shadow-md">
+                    Submit Application
+                </button>
+                <a href="{% url 'available_jobs' %}" class="ml-3 text-gray-600 hover:underline">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

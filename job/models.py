@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from company.models import Company
 
+
 class Job(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
@@ -15,3 +16,14 @@ class Job(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+
+class JobApplication(models.Model):
+    applicant = models.ForeignKey(User, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.applicant} applied for {self.job.title}"
